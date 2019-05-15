@@ -14,7 +14,4 @@ info = Blueprint('info', __name__, url_prefix='/info')
 def get_app_info():
     app.logger.debug("INFO")
 
-    server_info = include_server_info()
-    return jsonify(server_name=server_info['get_server_name'](),
-                   git_revision=server_info['get_git_revision'](),
-                   git_tag=server_info['get_git_tag']())
+

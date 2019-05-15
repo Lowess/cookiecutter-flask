@@ -4,7 +4,6 @@
 import os
 import re
 import logging
-import git
 
 from flask import Flask, redirect, url_for, render_template, request
 
@@ -26,52 +25,9 @@ else:
 ### Extra Jinja Filters
 ################################################################################
 
-
-################################################################################
-### Code revision
-################################################################################
-
-git_repo = None
-git_sha = None
-git_ref = None
-
-try:
-    git_repo = git.Repo(search_parent_directories=True)
-    git_sha = git_repo.head.object.hexsha[:7]
-    git_ref = str(git_repo.head.reference) if git_repo.head else '-'
-except Exception:
-    pass
-
-app.config['GIT_REVISION'] = git_sha
-app.config['GIT_TAG'] = git_ref
-
 ################################################################################
 ### Backend Setup
 ################################################################################
-
-
-################################################################################
-# http://stackoverflow.com/questions/13809890/flask-context-processors-functions
-################################################################################
-
-
-@app.context_processor
-def include_server_info():
-    server_name, git_revision, git_tag = request.host.split(':')[0], app.config['GIT_REVISION'], app.config['GIT_TAG']
-
-    def get_server_name():
-        return server_name
-
-    def get_git_revision():
-        return git_revision
-
-    def get_git_tag():
-        return git_tag
-
-    return dict(get_server_name=get_server_name,
-                get_git_revision=get_git_revision,
-                get_git_tag=get_git_tag)
-
 
 ################################################################################
 # Blueprints registration
@@ -79,11 +35,9 @@ def include_server_info():
 
 from {{ cookiecutter.app_name }}.home.controllers import home
 from {{ cookiecutter.app_name }}.heartbeat.controllers import heartbeat
-from {{ cookiecutter.app_name }}.info.controllers import info
 
 app.register_blueprint(home)
 app.register_blueprint(heartbeat)
-app.register_blueprint(info)
 
 
 @app.route('/', methods=['GET'])

@@ -26,21 +26,6 @@
 </nav>
 
 <!-- Header -->
-<div class="container bartender">
-        <div>
-            <img class="img-responsive pull-right" width="10%" height="10%" src="{{ url_for('static', filename='img/bartender.png') }}" alt="">
-            <div class="panel panel-default pull-right">
-                <div class="panel-body text-right">
-                    <p>
-                        You are being served by : <span class="label label-primary">{{ get_server_name() | default('-') }}</span>
-                    </p>
-                    <p>
-                        Code revision is : <span class="label label-primary">{{ get_git_revision() | default('-') }}</span>
-                        <span class="label label-primary">{{ get_git_tag() | default('-') }}</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container">
 </div>
 {% endraw %}
